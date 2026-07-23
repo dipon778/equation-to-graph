@@ -1,0 +1,372 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+    overflow: hidden;
+    -webkit-font-smoothing: antialiased;
+}
+
+#root {
+    height: 100vh;
+    width: 100vw;
+}
+
+.app-container {
+    display: flex;
+    height: 100vh;
+    width: 100vw;
+}
+
+.control-panel-container {
+    width: 320px;
+    min-width: 320px;
+    background-color: #f8f9fa;
+    padding: 20px;
+    box-shadow: 2px 0 8px rgba(0, 0, 0, 0.08);
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    border-right: 1px solid #e9ecef;
+}
+
+.graph-canvas-wrapper {
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+    background-color: #F8F9FA;
+}
+
+.control-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex: 1;
+}
+
+/* ── Input Section ── */
+.input-container {
+    display: flex;
+    gap: 6px;
+    align-items: stretch;
+}
+
+.input-container input[type="text"] {
+    flex: 1;
+    padding: 10px 12px;
+    border: 1.5px solid #dee2e6;
+    border-radius: 6px;
+    font-size: 14px;
+    outline: none;
+    font-family: 'Courier New', monospace;
+    transition: border-color 0.15s, box-shadow 0.15s;
+    background: #fff;
+}
+
+.input-container input[type="text"]:focus {
+    border-color: #4dabf7;
+    box-shadow: 0 0 0 3px rgba(77, 171, 247, 0.2);
+}
+
+.input-container button {
+    padding: 10px 18px;
+    background: linear-gradient(135deg, #4dabf7, #339af0);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    transition: transform 0.1s, box-shadow 0.15s;
+    white-space: nowrap;
+}
+
+.input-container button:hover {
+    background: linear-gradient(135deg, #339af0, #228be6);
+    box-shadow: 0 2px 8px rgba(77, 171, 247, 0.3);
+    transform: translateY(-1px);
+}
+
+.input-container button:active {
+    transform: translateY(0);
+}
+
+/* ── Equation Cards ── */
+.equation-card {
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 8px 12px;
+    margin: 4px 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+    border: 1px solid #f1f3f5;
+    transition: opacity 0.2s, border-color 0.2s;
+}
+
+.equation-card--hidden {
+    opacity: 0.5;
+    border-color: #e9ecef;
+}
+
+.equation-card--error {
+    border-color: #ff6b6b;
+    background-color: #fff5f5;
+}
+
+.equation-formula-wrapper {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.equation-error {
+    font-size: 11px;
+    color: #e03131;
+    line-height: 1.3;
+}
+
+.text-error {
+    color: #e03131;
+}
+
+.color-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.15);
+}
+
+.equation-formula {
+    font-family: 'Courier New', monospace;
+    font-size: 13px;
+    word-break: break-all;
+    flex: 1;
+    color: #222;
+    line-height: 1.4;
+}
+
+.text-muted {
+    color: #adb5bd;
+    text-decoration: line-through;
+}
+
+.equation-actions {
+    display: flex;
+    gap: 4px;
+    flex-shrink: 0;
+}
+
+.visibility-btn {
+    background: transparent;
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+    cursor: pointer;
+    padding: 4px 6px;
+    font-size: 14px;
+    line-height: 1;
+    transition: background 0.15s;
+}
+
+.visibility-btn:hover {
+    background: #f1f3f5;
+}
+
+.edit-btn {
+    background: transparent;
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+    cursor: pointer;
+    padding: 4px 6px;
+    font-size: 14px;
+    line-height: 1;
+    transition: background 0.15s;
+    color: #495057;
+}
+
+.edit-btn:hover {
+    background: #fff3bf;
+    border-color: #fab005;
+}
+
+.edit-input {
+    flex: 1;
+    padding: 4px 8px;
+    font-family: 'Courier New', monospace;
+    font-size: 13px;
+    border: 1.5px solid #4dabf7;
+    border-radius: 4px;
+    outline: none;
+    background: #fff;
+    min-width: 0;
+}
+
+.delete-btn {
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    padding: 4px 8px;
+    font-size: 12px;
+    font-weight: bold;
+    transition: opacity 0.15s, transform 0.1s;
+    opacity: 0.8;
+}
+
+.delete-btn:hover {
+    opacity: 1;
+    transform: scale(1.05);
+}
+
+.delete-btn:active {
+    transform: scale(0.95);
+}
+
+/* ── Empty State ── */
+.empty-state {
+    color: #adb5bd;
+    font-style: italic;
+    font-size: 13px;
+    padding: 12px 0;
+    text-align: center;
+}
+
+.clear-all-btn {
+    width: 100%;
+    padding: 6px 0;
+    background: transparent;
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+    color: #868e96;
+    font-size: 11px;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+}
+
+.clear-all-btn:hover {
+    background: #fff5f5;
+    color: #e03131;
+    border-color: #ffc9c9;
+}
+
+/* ── Settings Panel ── */
+.settings-panel {
+    margin-top: auto;
+    padding: 14px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+    border: 1px solid #f1f3f5;
+}
+
+.settings-panel h3 {
+    margin: 0 0 10px 0;
+    font-size: 13px;
+    color: #495057;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.settings-row {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.settings-row:last-child {
+    margin-bottom: 0;
+}
+
+.settings-row label {
+    font-size: 12px;
+    color: #868e96;
+    min-width: 42px;
+}
+
+.settings-row input {
+    flex: 1;
+    padding: 6px 8px;
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+    font-size: 12px;
+    outline: none;
+    font-family: 'Courier New', monospace;
+    transition: border-color 0.15s;
+}
+
+.settings-row input:focus {
+    border-color: #4dabf7;
+}
+
+.settings-row button {
+    padding: 6px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 500;
+    color: white;
+    background: linear-gradient(135deg, #51cf66, #40c057);
+    transition: box-shadow 0.15s;
+}
+
+.settings-row button:hover {
+    box-shadow: 0 2px 6px rgba(64, 192, 87, 0.3);
+}
+
+/* ── Quote Section ── */
+.quote-section {
+    margin-top: auto;
+    padding: 14px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+    border: 1px solid #f1f3f5;
+}
+
+.quote-text {
+    margin: 0;
+    font-size: 11px;
+    font-style: italic;
+    color: #868e96;
+    line-height: 1.5;
+    text-align: center;
+}
+
+/* ── Crosshair ── */
+.crosshair-h {
+    position: absolute;
+    height: 1px;
+    background: rgba(0, 0, 0, 0.2);
+    pointer-events: none;
+    z-index: 10;
+}
+
+.crosshair-v {
+    position: absolute;
+    width: 1px;
+    background: rgba(0, 0, 0, 0.2);
+    pointer-events: none;
+    z-index: 10;
+}
+
+.crosshair-tooltip {
+    position: absolute;
+    background: rgba(33, 37, 41, 0.85);
+    color: #fff;
+    font-family: 'Courier New', monospace;
+    font-size: 11px;
+    padding: 3px 7px;
+    border-radius: 4px;
+    pointer-events: none;
+    white-space: nowrap;
+    z-index: 11;
+}
