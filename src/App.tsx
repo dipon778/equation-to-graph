@@ -8,9 +8,9 @@ import type { EquationItem } from './types';
 const STORAGE_KEY = 'eq2graph_equations';
 
 const DEFAULT_EQUATIONS: EquationItem[] = [
-  { formula: 'y = sin(x)', color: GRAPH_COLORS[0], isVisible: true },
-  { formula: 'y = x', color: GRAPH_COLORS[1], isVisible: true },
-  { formula: 'y = x^2', color: GRAPH_COLORS[3], isVisible: true },
+  { formula: 'x=cos(t),y=sin(t)', color: GRAPH_COLORS[0], isVisible: true },
+  { formula: 'x=16*sin(t)^3,y=13*cos(t)-5*cos(2*t)-2*cos(3*t)-cos(4*t)', color: GRAPH_COLORS[1], isVisible: true },
+  { formula: 'y = sin(x)', color: GRAPH_COLORS[3], isVisible: true },
 ];
 
 function loadEquations(): EquationItem[] {
